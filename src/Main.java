@@ -92,7 +92,11 @@ public class Main {
             result.append(role).append(":\n");
             for (int TextIndex = 0; TextIndex < textLines.length; TextIndex++) {
                 if (textLines[TextIndex].startsWith(role + ":")) {
-                    result.append(TextIndex + 1).append(")").append(textLines[TextIndex].replaceFirst((role + ":"), "")).append("\n");
+                    result.append(TextIndex + 1)
+                            .append(")")
+                            .append(textLines[TextIndex]
+                            .replaceFirst((role + ":"), ""))
+                            .append("\n");
                 }
             }
             result.append("\n");
