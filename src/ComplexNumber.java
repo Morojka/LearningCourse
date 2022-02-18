@@ -1,5 +1,3 @@
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 
 public final class ComplexNumber {
