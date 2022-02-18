@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        String [] roles= {
+        /*String [] roles= {
                 "Городничий","Аммос Федорович",
                 "Артемий Филиппович",
                 "Лука Лукич"};
@@ -15,7 +15,12 @@ public class Main {
                 "Аммос Федорович: Вот те на!",
                 "Артемий Филиппович: Вот не было заботы, так подай!",
                 "Лука Лукич: Господи боже! еще и с секретным предписаньем!"};
-        System.out.println(printTextPerRole(roles, textLines));
+        System.out.println(printTextPerRole(roles, textLines));*/
+
+        ComplexNumber a = new ComplexNumber(1, 1);
+        ComplexNumber b = new ComplexNumber(1, 1);
+        System.out.println(a.equals(b));
+        System.out.println(a.hashCode() == b.hashCode());
     }
 
     /**
