@@ -1,11 +1,32 @@
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.function.DoubleUnaryOperator;
+import TextAnalyzers.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(integrate(x -> 1, 0, 10));
+        String[] spamKeywords = {"spam", "bad"};
+        int commentMaxLength = 40;
+        TextAnalyzer[] textAnalyzers = {
+                new SpamAnalyzer(spamKeywords),
+                new NegativeTextAnalyzer(),
+                new TooLongTextAnalyzer(commentMaxLength)
+        };
+
+        System.out.println(checkLabels(textAnalyzers, "Very bad, very neg =(, very ..................").toString());
     }
+
+    public static Label checkLabels(TextAnalyzer[] analyzers, String text) {
+        Label label;
+
+        for (TextAnalyzer analyzer: analyzers) {
+            label = analyzer.processText(text);
+            if (label != Label.OK) return label;
+        }
+
+        return Label.OK;
+    }
+
 
     /**
      * Calculates factorial of given <code>value</code>.
@@ -107,6 +128,7 @@ public class Main {
     }
 
     public static double integrate(DoubleUnaryOperator f, double a, double b) {
+        // System.out.println(integrate(x -> 1, 0, 10)); вызов
         double result = 0;
         double n = 10000000;
         double h = (b - a) / n;
