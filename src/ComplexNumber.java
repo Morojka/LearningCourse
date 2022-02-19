@@ -1,6 +1,13 @@
 import java.util.Objects;
 
 public final class ComplexNumber {
+    /* ComplexNumber a = new ComplexNumber(1, 1);
+        ComplexNumber b = new ComplexNumber(1, 1);
+        System.out.println(a.equals(b));
+        System.out.println(a.hashCode() == b.hashCode());
+        вызов из мейна
+        */
+
     private final double re;
     private final double im;
 

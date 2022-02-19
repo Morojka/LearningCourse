@@ -1,27 +1,32 @@
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.function.DoubleUnaryOperator;
+import TextAnalyzers.*;
 
 public class Main {
     public static void main(String[] args) {
-        /*String [] roles= {
-                "Городничий","Аммос Федорович",
-                "Артемий Филиппович",
-                "Лука Лукич"};
-        String [] textLines={
-                "Городничий: Я пригласил вас, господа, с тем, чтобы сообщить вам пренеприятное известие: к нам едет ревизор.",
-                "Аммос Федорович: Как ревизор?",
-                "Артемий Филиппович: Как ревизор?",
-                "Городничий: Ревизор из Петербурга, инкогнито. И еще с секретным предписаньем.",
-                "Аммос Федорович: Вот те на!",
-                "Артемий Филиппович: Вот не было заботы, так подай!",
-                "Лука Лукич: Господи боже! еще и с секретным предписаньем!"};
-        System.out.println(printTextPerRole(roles, textLines));*/
+        String[] spamKeywords = {"spam", "bad"};
+        int commentMaxLength = 40;
+        TextAnalyzer[] textAnalyzers = {
+                new SpamAnalyzer(spamKeywords),
+                new NegativeTextAnalyzer(),
+                new TooLongTextAnalyzer(commentMaxLength)
+        };
 
-        ComplexNumber a = new ComplexNumber(1, 1);
-        ComplexNumber b = new ComplexNumber(1, 1);
-        System.out.println(a.equals(b));
-        System.out.println(a.hashCode() == b.hashCode());
+        System.out.println(checkLabels(textAnalyzers, "Very bad, very neg =(, very ..................").toString());
     }
+
+    public static Label checkLabels(TextAnalyzer[] analyzers, String text) {
+        Label label;
+
+        for (TextAnalyzer analyzer: analyzers) {
+            label = analyzer.processText(text);
+            if (label != Label.OK) return label;
+        }
+
+        return Label.OK;
+    }
+
 
     /**
      * Calculates factorial of given <code>value</code>.
@@ -64,22 +69,22 @@ public class Main {
 
             if (a1[i] <= a2[j]) {
                 result[k] = a1[i];
-                if (i+1 < a1.length) {
+                if (i + 1 < a1.length) {
                     i++;
                 } else {
                     for (; j < a2.length; j++) {
-                        result[k+1] = a2[j];
+                        result[k + 1] = a2[j];
                         k++;
                     }
                     break;
                 }
             } else {
                 result[k] = a2[j];
-                if (j+1 < a2.length) {
+                if (j + 1 < a2.length) {
                     j++;
                 } else {
                     for (; i < a1.length; i++) {
-                        result[k+1] = a1[i];
+                        result[k + 1] = a1[i];
                         k++;
                     }
                     break;
@@ -91,6 +96,19 @@ public class Main {
     }
 
     private static String printTextPerRole(String[] roles, String[] textLines) {
+        /*String [] roles= {
+                "Городничий","Аммос Федорович",
+                "Артемий Филиппович",
+                "Лука Лукич"};
+        String [] textLines={
+                "Городничий: Я пригласил вас, господа, с тем, чтобы сообщить вам пренеприятное известие: к нам едет ревизор.",
+                "Аммос Федорович: Как ревизор?",
+                "Артемий Филиппович: Как ревизор?",
+                "Городничий: Ревизор из Петербурга, инкогнито. И еще с секретным предписаньем.",
+                "Аммос Федорович: Вот те на!",
+                "Артемий Филиппович: Вот не было заботы, так подай!",
+                "Лука Лукич: Господи боже! еще и с секретным предписаньем!"};
+        System.out.println(printTextPerRole(roles, textLines));*/
         StringBuilder result = new StringBuilder();
 
         for (String role : roles) {
@@ -100,12 +118,25 @@ public class Main {
                     result.append(TextIndex + 1)
                             .append(")")
                             .append(textLines[TextIndex]
-                            .replaceFirst((role + ":"), ""))
+                                    .replaceFirst((role + ":"), ""))
                             .append("\n");
                 }
             }
             result.append("\n");
         }
         return result.toString();
+    }
+
+    public static double integrate(DoubleUnaryOperator f, double a, double b) {
+        // System.out.println(integrate(x -> 1, 0, 10)); вызов
+        double result = 0;
+        double n = 10000000;
+        double h = (b - a) / n;
+
+        for (int i = 0; i <= n; i++) {
+            result += f.applyAsDouble(a + h * (i + 0.5));
+        }
+        result *= h;
+        return result;
     }
 }
