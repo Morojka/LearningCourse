@@ -5,7 +5,11 @@ import TextAnalyzers.*;
 
 public class Main {
     public static void main(String[] args) {
-        String[] spamKeywords = {"spam", "bad"};
+
+    }
+
+    public static Label checkLabels(TextAnalyzer[] analyzers, String text) {
+        /*String[] spamKeywords = {"spam", "bad"};
         int commentMaxLength = 40;
         TextAnalyzer[] textAnalyzers = {
                 new SpamAnalyzer(spamKeywords),
@@ -13,10 +17,7 @@ public class Main {
                 new TooLongTextAnalyzer(commentMaxLength)
         };
 
-        System.out.println(checkLabels(textAnalyzers, "Very bad, very neg =(, very ..................").toString());
-    }
-
-    public static Label checkLabels(TextAnalyzer[] analyzers, String text) {
+        System.out.println(checkLabels(textAnalyzers, "Very bad, very neg =(, very ..................").toString());*/
         Label label;
 
         for (TextAnalyzer analyzer: analyzers) {
@@ -26,7 +27,6 @@ public class Main {
 
         return Label.OK;
     }
-
 
     /**
      * Calculates factorial of given <code>value</code>.
