@@ -1,6 +1,7 @@
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.function.DoubleUnaryOperator;
+
 import TextAnalyzers.*;
 
 public class Main {
@@ -20,7 +21,7 @@ public class Main {
         System.out.println(checkLabels(textAnalyzers, "Very bad, very neg =(, very ..................").toString());*/
         Label label;
 
-        for (TextAnalyzer analyzer: analyzers) {
+        for (TextAnalyzer analyzer : analyzers) {
             label = analyzer.processText(text);
             if (label != Label.OK) return label;
         }
