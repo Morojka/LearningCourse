@@ -1,3 +1,5 @@
+package Robot;
+
 public class Robot {
     public enum Direction {
         UP,
@@ -12,6 +14,11 @@ public class Robot {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public void moveRobotTo(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
