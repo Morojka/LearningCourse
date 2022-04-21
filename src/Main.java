@@ -1,13 +1,49 @@
+import java.io.Console;
 import java.math.BigInteger;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.function.DoubleUnaryOperator;
+import java.util.logging.*;
 
+import PostSystem.*;
+import PostSystem.Package;
 import Robot.*;
 import TextAnalyzers.*;
 
 public class Main {
     public static void main(String[] args) {
+    }
 
+    //task 4.3.2
+    public static void sendMail() {
+        Thief thief = new Thief(10);
+        MailService[] services = {thief};
+
+        Package goldPackage = new Package("gold", 20);
+        Package bricksPackage = new Package("bricks", 5);
+        MailPackage GoldPackageToSend = new MailPackage("me", "you", goldPackage);
+        MailPackage BricksPackageToSend = new MailPackage("you", "me", bricksPackage);
+
+        MailMessage message = new MailMessage("me", "you", "Hello, there!");
+
+        UntrustworthyMailWorker postWorker = new UntrustworthyMailWorker(services);
+        MailPackage deliveredMail = ((MailPackage) postWorker.processMail(BricksPackageToSend));
+
+        System.out.println(MessageFormat.format("content: {0}, price: {1}", deliveredMail.getContent().getContent(), deliveredMail.getContent().getPrice()));
+    }
+
+    //task 4.3.1
+    public static void logging() {
+        Logger loggingClassA = Logger.getLogger("org.stepic.java.logging.ClassA");
+        loggingClassA.setLevel(Level.ALL);
+        Logger loggingClassB = Logger.getLogger("org.stepic.java.logging.ClassB");
+        loggingClassB.setLevel(Level.WARNING);
+        Logger orgStepicJava = Logger.getLogger("org.stepic.java");
+        orgStepicJava.setUseParentHandlers(false);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        consoleHandler.setFormatter(new XMLFormatter());
+        orgStepicJava.addHandler(consoleHandler);
     }
 
     public static void moveRobot(RobotConnectionManager robotConnectionManager, int toX, int toY) {
