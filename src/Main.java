@@ -1,4 +1,6 @@
-import java.io.Console;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -12,6 +14,28 @@ import TextAnalyzers.*;
 
 public class Main {
     public static void main(String[] args) {
+
+    }
+
+    //task 5.2
+    //InputStream stream = new ByteArrayInputStream(new byte[] {0x33, 0x45, 0x01});
+    public static int checkSumOfStream(InputStream inputStream) throws IOException {
+        int checkSum = 0, readsResult = -1;
+        byte[] readBytes = new byte[1024];
+
+        try {
+            do {readsResult = inputStream.read(readBytes);
+                if (readsResult >= 0) {
+                    for (int i = 0; i < readsResult; i++) {
+                        checkSum = Integer.rotateLeft(checkSum,1)^Byte.toUnsignedInt(readBytes[i]);
+                    }
+                }
+            } while (readsResult >= 0);
+        } catch (IOException e) {
+            throw e;
+        }
+
+        return checkSum;
     }
 
     //task 4.3.2
